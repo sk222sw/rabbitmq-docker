@@ -1,0 +1,23 @@
+version: "3"
+services:
+  rabbitmq:
+    container_name: some-rabbit
+    hostname: my-rabbit
+    image: rabbitmq:3
+    ports:
+      - 5672:5672
+  # rabbitmq-management:
+  #   image: rabbitmq:3-management
+  #   ports:
+  #     - "15672:15672"
+  #
+  send:
+    image: send
+    container_name: send
+    build:
+      context: ./Send
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - rabbitmq
