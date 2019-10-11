@@ -10,14 +10,25 @@ services:
   #   image: rabbitmq:3-management
   #   ports:
   #     - "15672:15672"
-  #
-  send:
-    image: send
-    container_name: send
+
+  # send:
+  #   image: send
+  #   container_name: send
+  #   build:
+  #     context: ./Send
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8080:80
+  #   depends_on:
+  #     - rabbitmq
+
+  sendapi:
+    image: api
+    container_name: api
     build:
-      context: ./Send
+      context: ./api
       dockerfile: Dockerfile
     ports:
-      - 8080:80
+      - 8081:80
     depends_on:
       - rabbitmq
