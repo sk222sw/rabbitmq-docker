@@ -6,11 +6,28 @@ services:
     image: rabbitmq:3
     ports:
       - 5672:5672
-  # rabbitmq-management:
-  #   image: rabbitmq:3-management
-  #   ports:
-  #     - "15672:15672"
+  rabbitmq-management:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
 
+  mtapi:
+    image: mtapi
+    container_name: mtapi
+    build:
+      context: ./MTApi
+      dockerfile: Dockerfile
+    ports:
+      - 5000:80
+
+  mtreceive:
+    image: mtreceive
+    container_name: mtreceive
+    build:
+      context: ./MTReceive
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
   # send:
   #   image: send
   #   container_name: send
@@ -21,14 +38,13 @@ services:
   #     - 8080:80
   #   depends_on:
   #     - rabbitmq
-
-  sendapi:
-    image: api
-    container_name: api
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    ports:
-      - 8081:80
-    depends_on:
-      - rabbitmq
+  # api:
+  #   image: api
+  #   container_name: api
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8081:80
+  #   depends_on:
+  #     - rabbitmq
